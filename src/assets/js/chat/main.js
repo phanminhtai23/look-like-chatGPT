@@ -1,5 +1,5 @@
-import { buttonHasBeenOpended, elementWasClicked, checkFileType } from './check.js';
-
+// import { buttonHasBeenOpended, elementWasClicked, checkFileType } from './check.js';
+// import { isNavOpen, toggleNav } from './sideNav.js';
 let isNavOpen = false; // Biến trạng thái xác định thanh bên đang mở hay đó
 
 function toggleNav() {
@@ -346,6 +346,37 @@ function previewImage(result) {
 	}
 
 }
+
+// Kiểm tra document gửi vào
+function checkFileType(url) {
+	// Lấy phần mở rộng của file từ URL
+	var extension = url.split('.').pop().toLowerCase();
+
+	// Danh sách các phần mở rộng của ảnh
+	var imageExtensions = ['jpg', 'jpeg', 'png', 'heif', 'heic', 'webp'];
+	var documentExtensions = [
+		'pdf',
+		'html',
+		'txt',
+		'js',
+		'py',
+		'css',
+		'md',
+		'csv',
+		'xml',
+		'rtf',
+	];
+
+	// Kiểm tra nếu phần mở rộng nằm trong danh sách các phần mở rộng của ảnh
+	if (imageExtensions.includes(extension)) {
+		return 'image';
+	} else if (documentExtensions.includes(extension)) {
+		return 'document';
+	}
+	return 'other';
+}
+
+
 
 function deletePreview() {
 	const imgContainer = document.querySelector('.img-container');
