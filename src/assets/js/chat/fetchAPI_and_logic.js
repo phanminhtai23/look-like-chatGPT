@@ -46,7 +46,7 @@ document
 // Nhấn nút gửi
 function sendMessage() {
 	var sendButton = document.getElementById('send');
-	
+
 	if (sendButton.disabled) {
 		return; // Nếu nút gửi bị vô hiệu hóa, không làm gì cả
 	}
@@ -201,14 +201,15 @@ function fetchAPIGetTextAndDocument(formData) {
 			}
 		})
 		.catch((error) => {
-			initializeSSE('Lỗi rồi bé ơi, Moew chỉ hỗ trợ file có định dạng pdf, txt, js,..thôi và đừng quên đặt câu hỏi nhé!!');
+			initializeSSE(
+				'Lỗi rồi bé ơi, Moew chỉ hỗ trợ file có định dạng pdf, txt, js,..thôi và đừng quên đặt câu hỏi nhé!!',
+			);
 			console.error('Error:', error);
 		});
 }
 
 // Function to initialize the SSE connection
 function initializeSSE(responseText) {
-
 	console.log(responseText);
 	const eventSource = new EventSource(
 		`/api/stream?text=${encodeURIComponent(responseText)}`,
@@ -346,7 +347,6 @@ function startTimer(messageElementWaiting) {
 
 	// Cập nhật thời gian mỗi 100ms
 	timerId = setInterval(updateTimer, 100);
-	
 }
 
 // Đừng đếm thời gian đợi phản hồi

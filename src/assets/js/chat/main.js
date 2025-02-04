@@ -1,3 +1,5 @@
+import { buttonHasBeenOpended, elementWasClicked, checkFileType } from './check.js';
+
 let isNavOpen = false; // Biến trạng thái xác định thanh bên đang mở hay đó
 
 function toggleNav() {
@@ -256,3 +258,102 @@ document.querySelectorAll('.user i').forEach(function (icon) {
 		}
 	});
 });
+
+// upload_widget image or documents
+const myWidget = cloudinary.createUploadWidget(
+	{
+		cloudName: 'dwdplk5xq',
+		uploadPreset: 'look-like-ChatGPT',
+		// cropping: true, //add a cropping step
+		// showAdvancedOptions: true,  //add advanced options (public_id and tag)
+		// sources: [ "local", "url"], // restrict the upload sources to URL and local files
+		multiple: false, //restrict upload to a single file
+		// folder: "user_images", //upload files to the specified folder
+		// tags: ["users", "profile"], //add the given tags to the uploaded files
+		// context: {alt: "user_uploaded"}, //add the given context data to the uploaded files
+		// clientAllowedFormats: ["images"], //restrict uploading to image files only
+		// maxImageFileSize: 2000000,  //restrict file size to less than 2MB
+		// maxImageWidth: 2000, //Scales the image down to a width of 2000 pixels before uploading
+		// theme: "purple", //change to a purple theme
+	},
+	(error, result) => {
+		if (!error && result && result.event === 'success') {
+			// console.log('Done! Here is the image info: ', result.info);
+			previewImage(result);
+		}
+	},
+);
+
+document.getElementById('upload_widget').addEventListener(
+	'click',
+	function () {
+		// console.log('okkk');
+		myWidget.open();
+	},
+	false,
+);
+
+// enter thì gửi tin nhắn
+// document
+// 	.getElementById('messageInput')
+// 	.addEventListener('keypress', function (event) {
+// 		if (event.key === 'Enter') {
+// 			sendMessage();
+// 		}
+// 	});
+
+function previewImage(result) {
+	deletePreview();
+	var format = result.info.secure_url.split('.').pop().toLowerCase();
+	const previewSpace = document.getElementById('preview-imgs');
+
+	if (checkFileType(format) === 'image') {
+
+		// tạo container img
+		const imgContainer = document.createElement('div');
+		imgContainer.className = 'img-container';
+
+		// tạo img
+		const image = document.createElement('img');
+		image.src = result.info.secure_url;
+		image.alt = result.info.original_filename;
+		image.className = 'image';
+
+		// tạo nút xóa
+		const deleteBtn = document.createElement('i');
+		deleteBtn.className = 'image-close-btn fa-solid fa-xmark fa-2xs';
+		deleteBtn.addEventListener('click', deletePreview);
+
+		imgContainer.appendChild(image);
+		imgContainer.appendChild(deleteBtn);
+
+		previewSpace.appendChild(imgContainer);
+		// // set global link image
+		// global_InforImage = result.info;
+		// preview.classList.add('previewImage');
+	} else if (checkFileType(format) === 'document') {
+		// File is a document
+		const docElement = document.createElement('p');
+		docElement.className = 'preview-document';
+		docElement.textContent = result.info.original_filename + '.' + format;
+
+		previewSpace.appendChild(docElement);
+		// global_InforDocument = result.info;
+		// preview.classList.add('previewLink');
+	} else {
+		alert('Không hỗ trợ file này!');
+		return;
+	}
+
+}
+
+function deletePreview() {
+	const imgContainer = document.querySelector('.img-container');
+	const previewDocument = document.querySelector('.preview-document');
+	if (imgContainer) {
+		imgContainer.remove();
+	} else if (previewDocument) {
+		previewDocument.remove();
+	}
+}
+

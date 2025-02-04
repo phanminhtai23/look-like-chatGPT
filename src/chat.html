@@ -6,11 +6,11 @@
 		<title>Meow AI</title>
 		<link
 			rel="stylesheet"
-			href="{{ url_for('static', filename='css/style.css') }}"
+			href="assets\css\chat\style.css"
 		/>
 		<link
 			rel="icon"
-			href="{{ url_for('static', filename='favicon.ico') }}"
+			href="assets\images\favicon.ico"
 			type="image/x-icon"
 		/>
 		<link
@@ -41,7 +41,7 @@
 					><i class="fa-solid fa-sliders"></i
 				></span>
 
-				<span class="togglebtn-plus" onclick="insert_new_chat()"
+				<span class="togglebtn-plus"
 					><i class="fa-regular fa-square-plus fa-2xl"></i
 				></span>
 			</div>
@@ -96,7 +96,7 @@
 					<span> Meow Chat </span>
 					<img
 						class="image-titile"
-						src="../static/cat-svgrepo-com.svg"
+						src="assets\images\cat-svgrepo-com.svg"
 						alt="Image"
 					/>
 				</div>
@@ -116,26 +116,29 @@
 
 			<!--------- START FOOTER CHAT MAIN ---------->
 			<div id="bottom-main">
-				<div class="input-container">
-					<div class="preview-imgs">
-						<div class="img-container">
+				<div id="input-container">
+					<div id="preview-imgs">
+						<!-- <div class="img-container">
 							<img
 								class="image"
-								src="../static/Gemini_Generated_Image_dlrfjxdlrfjxdlrf.jpg"
+								src="assets\images\Gemini_Generated_Image_dlrfjxdlrfjxdlrf.jpg"
 								alt=""
 							/>
 							<i
 								class="image-close-btn fa-solid fa-xmark fa-2xs"
 							></i>
-						</div>
-						<p class="preview-document">document.pdfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</p>
+						</div> -->
+						<!-- <p class="preview-document">document.pdfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</p> -->
 
 					</div>
-					<input
+					<!-- <input
 						type="text"
 						id="messageInput"
 						placeholder="Enter your message"
-					/>
+					/> -->
+					<textarea name="" type="text"
+						id="messageInput"
+						placeholder="Enter your message" ></textarea>
 					<div class="icon">
 						<i
 							id="upload_widget"
@@ -151,6 +154,7 @@
 			</div>
 		</div>
 
-		<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+		<script type = "module" src="./assets/js/chat/main.js"></script>
+		<script type = "module" src="./assets/js/chat/check.js"></script>
 	</body>
 </html>
